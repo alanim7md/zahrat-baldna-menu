@@ -18,6 +18,9 @@ export default function AdminPage() {
   const [editingItemId, setEditingItemId] = useState(null);
   const [editingItemData, setEditingItemData] = useState(null);
 
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+
   useEffect(() => {
     if (localStorage.getItem('adminAuth') === 'true') {
       setIsLoggedIn(true);
@@ -35,12 +38,23 @@ export default function AdminPage() {
     setItems(itemData);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (password === 'admin123') {
-      localStorage.setItem('adminAuth', 'true');
-      setIsLoggedIn(true);
-      fetchData();
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password })
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem('adminAuth', 'true');
+        setIsLoggedIn(true);
+        fetchData();
+      } else {
+        alert('كلمة المرور غير صحيحة');
+      }
     } else {
       alert('كلمة المرور غير صحيحة');
     }
@@ -155,6 +169,26 @@ export default function AdminPage() {
     fetchData();
   };
 
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+    if (!currentPassword || !newPassword) return;
+
+    const res = await fetch('/api/auth/password', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentPassword, newPassword })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      alert('تم تغيير كلمة المرور بنجاح!');
+      setCurrentPassword('');
+      setNewPassword('');
+    } else {
+      alert(data.error || 'حدث خطأ أثناء تغيير كلمة المرور');
+    }
+  };
+
   if (!isLoggedIn) {
     return (
       <div className={styles.loginContainer}>
@@ -162,7 +196,7 @@ export default function AdminPage() {
           <h2>تسجيل دخول الإدارة</h2>
           <input 
             type="password" 
-            placeholder="كلمة المرور (admin123)" 
+            placeholder="كلمة المرور" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
@@ -178,6 +212,31 @@ export default function AdminPage() {
       <div className={styles.header}>
         <h1>زهرة بلدنا - لوحة التحكم</h1>
         <button onClick={handleLogout} className={styles.button}>تسجيل الخروج</button>
+      </div>
+
+      <div className={styles.section}>
+        <h2>إعدادات الحساب</h2>
+        <form onSubmit={handleChangePassword} className={styles.card}>
+          <div className={styles.formGroup}>
+            <input 
+              type="password" 
+              placeholder="كلمة المرور الحالية" 
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className={styles.input}
+              required
+            />
+            <input 
+              type="password" 
+              placeholder="كلمة المرور الجديدة" 
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+          <button type="submit" className={styles.button}>تغيير كلمة المرور</button>
+        </form>
       </div>
 
       <div className={styles.section}>

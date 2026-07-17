@@ -2,7 +2,7 @@
   position: relative;
   height: 30vh;
   min-height: 250px;
-  background: linear-gradient(to bottom, rgba(253, 252, 251, 0.7), rgba(253, 252, 251, 1)), url('https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=2000&auto=format&fit=crop') center/cover;
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 1)), url('https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=2000&auto=format&fit=crop') center/cover;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -16,7 +16,7 @@
 }
 
 .hero p {
-  color: #333;
+  color: #ccc;
   font-size: 1.1rem;
   font-weight: 500;
 }
@@ -39,9 +39,9 @@
 .tab {
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  background: #eee;
+  background: #222;
   color: var(--text-color);
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -90,14 +90,14 @@
   border-radius: 12px;
   overflow: hidden;
   display: flex;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .itemCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(206, 1, 25, 0.15);
+  box-shadow: 0 8px 25px rgba(206, 1, 25, 0.3);
 }
 
 .itemImage {
@@ -109,11 +109,11 @@
 .itemImagePlaceholder {
   width: 120px;
   height: 120px;
-  background: #eee;
+  background: #222;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: #666;
   font-size: 0.8rem;
 }
 
