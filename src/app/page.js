@@ -1,23 +1,22 @@
-import { readDb } from '@/lib/db';
+import { supabase } from '@/lib/supabase';
 import MenuClient from '@/components/MenuClient';
 import styles from '@/components/MenuClient.module.css';
 
 // Opt out of caching so the menu is always fresh when the user visits
 export const dynamic = 'force-dynamic';
 
-export default function Home() {
-  const db = readDb();
-  
-  // Sort categories and items
-  const categories = [...db.categories].sort((a, b) => {
-    if (a.displayOrder !== b.displayOrder) return a.displayOrder - b.displayOrder;
-    return a.name.localeCompare(b.name);
-  });
-  
-  const items = [...db.items].sort((a, b) => {
-    if (a.displayOrder !== b.displayOrder) return a.displayOrder - b.displayOrder;
-    return a.name.localeCompare(b.name);
-  });
+export default async function Home() {
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('*')
+    .order('displayOrder', { ascending: true })
+    .order('name', { ascending: true });
+    
+  const { data: items } = await supabase
+    .from('items')
+    .select('*')
+    .order('displayOrder', { ascending: true })
+    .order('name', { ascending: true });
 
   return (
     <main>
