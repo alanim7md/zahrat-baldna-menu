@@ -31,6 +31,9 @@ export default async function Home() {
       
       <footer style={{ textAlign: 'center', padding: '2rem', color: '#666', borderTop: '1px solid #333', marginTop: '3rem' }}>
         <p>&copy; {new Date().getFullYear()} زهرة بلدنا. جميع الحقوق محفوظة.</p>
+        <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
+          Powered by <a href="https://epics-iq.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--secondary-color)', textDecoration: 'none', fontWeight: 'bold' }}>EPICS</a>
+        </p>
       </footer>
     </main>
   );
